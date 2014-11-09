@@ -1,0 +1,3 @@
+[submodule "magento/htdocs"]
+	path = magento/htdocs
+	url = git@bitbucket.org:cieslix/magento-source.git
