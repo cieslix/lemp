@@ -5,6 +5,8 @@ directory "#{node.app.web_dir}/htdocs/" do
     recursive true
 end
 
+cieslix_varnish '/usr/local/etc/varnish/default.vcl'
+
 cieslix_nginx "/etc/nginx/sites-available/#{node.app.name}" do
     # socket "/var/run/php-fpm-www.sock"
     inet_socket "127.0.0.1:8000"
@@ -29,7 +31,7 @@ cieslix_nginx "/etc/nginx/sites-available/#{node.app.name}" do
     servers [
         {
             :location => '~ \.php$',
-            :port => "80",
+            :port => "8080",
             :server_name => "#{node.app.name}"
         }
     ]
@@ -53,6 +55,10 @@ php5_fpm_pool "#{node.app.name}" do
     notifies :restart, "service[#{node[:php_fpm][:package]}]", :delayed
 end
 
+package "libvarnishapi-dev" do
+    action :install
+end
+
 execute "apt-get update" do
   action :nothing
   command "apt-get update"
@@ -66,6 +72,11 @@ end
 execute "create database" do
   action :run
   command "echo 'CREATE DATABASE IF NOT EXISTS magento CHARSET UTF8' | mysql -uroot -p#{node.mariadb.server_root_password}"
+end
+
+execute "import database" do
+  action :run
+  command "mysql -uroot -p#{node.mariadb.server_root_password} < #{node.app.import_sql}"
 end
 
 execute "rsync magento" do

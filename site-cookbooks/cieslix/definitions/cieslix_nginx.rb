@@ -46,3 +46,11 @@ define :cieslix_nginx, :index => [], :servers => [], :root => nil, :static => []
 
     end
 end
+
+define :cieslix_varnish do
+    template params[:name] do
+        source 'default.vcl.erb'
+        cookbook params[:cookbook] || 'cieslix'
+        mode 0664
+    end
+end

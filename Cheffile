@@ -8,6 +8,6 @@ cookbook 'php5-fpm'
 cookbook 'php5_ppa'
 cookbook 'nginx'
 cookbook 'nginx-fastcgi'
+cookbook 'varnishd'
 cookbook 'mariadb',
     :git => 'https://github.com/joerocklin/chef-mariadb.git'
-cookbook 'varnish'
