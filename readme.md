@@ -1,6 +1,18 @@
 **Simple LEMP server**
 
-========================
+========
+
+Required packages
+
+========
+
+- ruby
+- gems
+- bundle
+
+Install
+
+========
 
 1. clone repo
 2. execute "bundle install"
