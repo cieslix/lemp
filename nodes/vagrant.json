@@ -1,0 +1,33 @@
+{
+    "run_list": [
+        "recipe[php5_ppa::from_ondrej]",
+        "recipe[php5-fpm::install]",
+        "recipe[nginx]",
+        "recipe[nginx-fastcgi]",
+        "recipe[mariadb::server]",
+        "recipe[mariadb::client]",
+        //"recipe[varnish]",
+        "recipe[cieslix]"
+    ],
+    "app": {
+        "name": "vagrant",
+        "web_dir": "/var/www/vagrant"
+    },
+    "user": {
+        "name": "www-data",
+        "group": "www-data"
+    },
+    "nginx": {
+        "install_method": "source",
+        "version": "1.7.7",
+        "default_site_enabled": false
+    },
+    "mariadb": {
+        "server_root_password": "password",
+        "server_repl_password": "password",
+        "server_debian_password": "password"
+    },
+    "automatic": {
+        "ipaddress": "192.168.35.10"
+    }
+}
