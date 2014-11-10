@@ -12,7 +12,8 @@
     "app": {
         "name": "vagrant",
         "web_dir": "/var/www/vagrant",
-        "import_sql": "/vagrant/magento/magento_data_1.9.0.1.sql"
+        "import_sql": "/vagrant/magento/magento_data_1.9.0.1.sql",
+        "database": "magento"
     },
     "user": {
         "name": "www-data",

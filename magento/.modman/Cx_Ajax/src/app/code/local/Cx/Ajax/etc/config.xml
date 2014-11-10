@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cx_Ajax>
+            <version>1.0.0</version>
+        </Cx_Ajax>
+    </modules>
+    <global>
+        <blocks>
+            <cx_ajax>
+                <class>Cx_Ajax_Block</class>
+            </cx_ajax>
+        </blocks>
+        <helpers>
+            <cx_ajax>
+                <class>Cx_Ajax_Helper</class>
+            </cx_ajax>
+        </helpers>
+        <models>
+            <cx_ajax>
+                <class>Cx_Ajax_Model</class>
+            </cx_ajax>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <cx_ajax>
+                    <file>cx_ajax.xml</file>
+                </cx_ajax>
+            </updates>
+        </layout>
+    </frontend>
+</config>

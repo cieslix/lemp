@@ -54,3 +54,19 @@ define :cieslix_varnish do
         mode 0664
     end
 end
+
+define :cieslix_phoenix_default do
+    template params[:name] do
+        source 'phoenix-default.vcl.erb'
+        cookbook params[:cookbook] || 'cieslix'
+        mode 0664
+    end
+end
+
+define :cieslix_phoenix_vars do
+    template params[:name] do
+        source 'phoenix-vars.vcl.erb'
+        cookbook params[:cookbook] || 'cieslix'
+        mode 0664
+    end
+end

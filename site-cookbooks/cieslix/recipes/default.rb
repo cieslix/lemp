@@ -5,7 +5,8 @@ directory "#{node.app.web_dir}/htdocs/" do
     recursive true
 end
 
-cieslix_varnish '/usr/local/etc/varnish/default.vcl'
+cieslix_phoenix_default '/usr/local/etc/varnish/default.vcl'
+cieslix_phoenix_vars '/usr/local/etc/varnish/vars.vcl'
 
 cieslix_nginx "/etc/nginx/sites-available/#{node.app.name}" do
     # socket "/var/run/php-fpm-www.sock"
@@ -71,17 +72,17 @@ end
 
 execute "create database" do
   action :run
-  command "echo 'CREATE DATABASE IF NOT EXISTS magento CHARSET UTF8' | mysql -uroot -p#{node.mariadb.server_root_password}"
+  command "echo 'CREATE DATABASE IF NOT EXISTS #{node.app.name} CHARSET UTF8' | mysql -uroot -p#{node.mariadb.server_root_password}"
 end
 
 execute "import database" do
   action :run
-  command "mysql -uroot -p#{node.mariadb.server_root_password} < #{node.app.import_sql}"
+  command "mysql -uroot -p#{node.mariadb.server_root_password} #{node.app.name} < #{node.app.import_sql}"
 end
 
 execute "rsync magento" do
   action :run
-  command "rsync -ra /vagrant/magento/* #{node.app.web_dir}"
+  command "rsync -ra /vagrant/magento/ #{node.app.web_dir}"
 end
 
 execute "add write permissions" do
@@ -92,4 +93,14 @@ end
 execute "change owner" do
   action :run
   command "chown #{node.user.name}:#{node.user.group} #{node.app.web_dir} -R"
+end
+
+execute "magento varnish enabled" do
+  action :run
+  command "cd #{node.app.web_dir}/htdocs; ../tools/n98-magerun.phar config:set varnishcache/general/enabled 1"
+end
+
+execute "modman deploy" do
+  action :run
+  command "cd #{node.app.web_dir}/htdocs; ../tools/modman deploy-all --force"
 end

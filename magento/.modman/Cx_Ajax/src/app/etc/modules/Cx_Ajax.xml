@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Cx_Ajax>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends></depends>
+        </Cx_Ajax>
+    </modules>
+</config>
